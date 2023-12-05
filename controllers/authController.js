@@ -4,13 +4,17 @@ const generateToken = () => {
   
   const register = async (req, res) => {
     try {
-      const { username, password } = req.body;
+      const { email, username, birthplace, birthdate, password1, password2 } = req.body;
    
-      if (!username || !password) {
-        throw new Error('Username dan password harus diisi');
+      if (!email || !username || !birthplace || !birthdate || !password1 || !password2) {
+        throw new Error('Semua parameter harus diisi');
       }
    
-      const newUser = { username, password, token: null };
+      if (password1 !== password2) {
+        throw new Error('Password harus sama');
+      }
+   
+      const newUser = { email, username, birthplace, birthdate, password: password1, token: null };
    
       if (username === 'user1') {
         throw new Error('Username sudah digunakan');
